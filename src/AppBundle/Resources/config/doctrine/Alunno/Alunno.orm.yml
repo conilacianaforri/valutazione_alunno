@@ -1,0 +1,26 @@
+Valutazione\Alunno\Entity\Alunno:
+    type: entity
+    table: alunno
+    id:
+        id:
+            type: string
+            generator: {strategy: NONE}
+    fields:
+        nome:
+            type: string
+            length: 32
+        cognome:
+            type: string
+            length: 32
+        email:
+            type: string
+    manyToOne:    
+        materia:
+            targetEntity: Materia
+            joinColumn:
+                nullable: false
+    oneToMany:
+        voti:
+            targetEntity: Voto
+            mappedBy: alunno
+            cascade: ["persist"]

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Aggiorna alunno - {{parent()}}
+{% endblock %} 
+
+{% block body %}
+    <h1>Aggiorna alunno</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="btn-group" role="group" aria-label="pulsantiera">
+        <button type="submit" class="btn btn-success">Modifica</button>
+        <a href="{{ path('alunno_visualizza', {id: alunno.id})}}" class="btn btn-default">Torna</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}    

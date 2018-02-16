@@ -1,0 +1,24 @@
+Valutazione\Alunno\Entity\Voto:
+    type: entity
+    table: voto
+    id:
+        id:
+            type: string
+            generator: {strategy: NONE}
+    fields:
+        descrizione:
+            type: text
+            length: 1000 #per avere un text
+        valutazione:
+            type: smallint
+            nullable: true
+        inMedia:
+            type: boolean
+            nullable: true
+    manyToOne:    
+        alunno:
+            targetEntity: Alunno
+            inversedBy: voti
+            joinColumn:
+                nullable: false
+                onDelete: CASCADE

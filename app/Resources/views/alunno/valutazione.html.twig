@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{# per accorciare il nome della variabile #}
+{% set hasValutazione = alunno.materia.hasValutazione%}
+{% set hasVotiFuoriMedia = alunno.materia.hasVotiFuoriMedia%}
+
+{% set total_colspan = 1 + hasValutazione + hasVotiFuoriMedia %}
+
+{% block title %}
+    Valuta alunno - {{parent()}}
+{% endblock %} 
+
+{% block body %}
+    <h1>Valuta alunno {{alunno.nome|title}} {{alunno.cognome|title}}</h1>
+    <dl class="dl-horizontal">
+    <dt>Materia</dt>
+    <dd>
+        {{alunno.materia|title}}
+        <span class="badge alert-{{hasValutazione ? 'success' : 'warning'}}">
+            {{hasValutazione ? 'Prevede valutazione' : 'Non prevede valutazione'}}
+        </span>
+        <span class="badge alert-{{hasVotiFuoriMedia ? 'success' : 'warning'}}">
+            {{hasValutazione ? 'Prevede voti fuori media' : 
+                'Non prevede voti fuori media'}}
+        </span>
+    </dd>
+    </dl>
+
+    {{ form_start(form) }}
+
+    <ul class="descrizione-prototype" 
+        data-prototype="{{ form_row(form.itemCommands.vars.prototype.descrizione)|e('html_attr') }}"/>
+    {% if hasValutazione %}
+        <ul class="valutazione-prototype" 
+        data-prototype="{{ form_row(form.itemCommands.vars.prototype.valutazione)|e('html_attr') }}"/>
+    {% endif %} 
+    {% if hasVotiFuoriMedia %}
+        <ul class="fuori-media-prototype" 
+        data-prototype="{{ form_row(form.itemCommands.vars.prototype.isInMedia)|e('html_attr') }}"/>
+    {% endif %}    
+    
+    <div class="aggiungi-form-valutazione btn-group pull-right">
+        <a class="btn btn-success" href="#">
+            <i class="fa fa-plus"></i>
+            Aggiungi
+        </a>
+    </div>
+    <table class="table-form-valutazione table">
+        <thead>
+            <tr>
+                <td>Descrizione</td>
+                {% if hasValutazione %}
+                    <td style="width: 1px;">Valutazione matematica</td>
+                {% endif %}
+                {% if hasVotiFuoriMedia %}
+                    <td style="width: 1px;">Concorre alla media?</td>
+                {% endif %}
+            </tr>
+        <thead>
+        <tbody>
+            {% for item in form.itemCommands %}
+                <tr>
+                    <td>{{ form_row(item.descrizione) }}</td>
+                    {% if hasValutazione %}
+                        <td>{{ form_row(item.valutazione) }}</td>
+                    {% endif %}
+                    {% if hasVotiFuoriMedia %}
+                        <td>{{ form_row(item.isInMedia) }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}    
+        </tbody>    
+    </table>
+    <div class="btn-group" role="group" aria-label="pulsantiera">
+        <button type="submit" class="btn btn-success">Modifica</button>
+        <a href="{{ path('alunno_visualizza', {id: alunno.id})}}" class="btn btn-default">Torna</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %} 
+
+{% block customJs %}
+    <script>
+        jQuery(document).ready(function() {
+
+        $(".aggiungi-form-valutazione").on('click', function(e) {
+            e.preventDefault();
+            addValutazioneItemToForm('table.table-form-valutazione');
+        });
+    }); 
+    </script>
+{% endblock %}   

@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Voti alunno - {{parent()}}
+{% endblock %} 
+
+{% block body %}
+    <h1>Dettaglio alunno</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Anagrafica</h2>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt>Nome</dt>
+                <dd>{{ alunno.nome|title }}</dd>
+                <dt>Cognome</dt>
+                <dd class="dati_cognome">{{ alunno.cognome|title }}</dd>
+                <dt>Email</dt>
+                <dd>{{ alunno.email }}</dd>
+                <dt>Materia</dt>
+                <dd>{{ alunno.materia|title }}</dd>
+            </dl>
+            <div class="btn-group" role="group" aria-label="pulsantiera">
+                <a class="btn btn-default" href="{{ path('alunni') }}">Torna</a>
+                <a class="modifica-alunno btn btn-primary" 
+                   href="{{ path('alunno_aggiorna', {id: alunno.id}) }}">
+                    Modifica anagrafica
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="panel-title">Voti</h2></div>
+        <div class="panel-body">
+            <div class="btn-group pull-right">
+                <a class="modifica-voti btn btn-primary" 
+                href="{{ path('alunno_valuta', {id: alunno.id}) }}">
+                    <i class="fa fa-balance-scale"></i> Valuta
+                </a>  
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="voti table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descrizione</th>
+                    {% if alunno.materia.hasValutazione %}
+                        <th>Valutazione matematica</th>
+                    {% endif %}
+                    {% if alunno.materia.hasVotiFuoriMedia %}
+                        <th>Concorre alla media?</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for voto in alunno.voti %}
+                <tr>
+                    <td>{{voto.id}}</td>
+                    <td class="voto-descrizione">{{voto.descrizione}}</td>
+                    {% if alunno.materia.hasValutazione %}
+                        <td class="voto-valutazione">{{voto.valutazione}}</td>
+                    {% endif %}
+                    {% if alunno.materia.hasVotiFuoriMedia %}
+                        <td class="voto-inmedia">
+                            {% if voto.inMedia %}
+                                <i class="fa fa-check alert-success"></i> 
+                            {% endif %}    
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>        
+{% endblock %}    

@@ -1,0 +1,38 @@
+Valutazione\Alunno\Command\AggiungiAlunnoCommand:
+    properties:
+        nome:
+            - NotBlank: ~
+            - Length:
+                max: 32
+        cognome:
+            - NotBlank: ~
+            - Length:
+                max: 32
+        email:
+            - NotBlank: ~
+            - Email: ~
+            - Length:
+                max: 255
+        materia:
+            - NotBlank: ~
+Valutazione\Alunno\Command\AggiornaAlunnoCommand:
+    properties:
+        nome:
+            - NotBlank: ~
+            - Length:
+                max: 32
+        cognome:
+            - NotBlank: ~
+            - Length:
+                max: 32
+        email:
+            - NotBlank: ~
+            - Email: ~
+            - Length:
+                max: 255
+Valutazione\Alunno\Command\ValutazioneItemCommand:
+    properties:
+        descrizione:
+            - NotBlank: ~
+            - Length:
+                max: 4000

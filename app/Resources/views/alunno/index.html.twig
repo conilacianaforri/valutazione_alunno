@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Elenco alunni - {{parent()}}
+{% endblock %}    
+
+{% block body %}
+    <h1>Elenco alunni</h1>
+    <div class="btn-group pull-right">
+        <a class="nuovo-alunno btn btn-success" href="{{path('alunno_aggiungi')}}">
+            <i class="fa fa-plus"></i>
+            Aggiungi
+        </a>
+    </div>
+    <table class="alunni table table-bordered">
+        <thead>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Materia</th>
+            <th>Email</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for alunno in pagination %}
+                <tr>
+                    <td>{{ alunno.nome|title }}</td>
+                    <td>{{ alunno.cognome|title }}</td>
+                    <td>{{ alunno.materia|title }}</td>
+                    <td>{{ alunno.email }}</td>
+                    <td>
+                        <a class="show-alunno btn btn-primary" 
+                           href="{{ path('alunno_visualizza', {id: alunno.id}) }}">
+                            <i class="fa fa-balance-scale"></i> Valuta
+                        </a>    
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">
+                        <div class="alert alert-warning">
+                            Nessun alunno inserito
+                        </div>
+                    </td>    
+                </tr>
+            {% endfor %}    
+        </tbody>    
+    </table> 
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

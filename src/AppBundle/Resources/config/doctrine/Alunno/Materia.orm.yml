@@ -1,0 +1,14 @@
+Valutazione\Alunno\Entity\Materia:
+    type: entity
+    table: materia
+    id:
+        id:
+            type: string
+            generator: {strategy: NONE}
+    fields:
+        denominazione:
+            type: string
+        hasValutazione:
+            type: boolean
+        hasVotiFuoriMedia:
+            type: boolean

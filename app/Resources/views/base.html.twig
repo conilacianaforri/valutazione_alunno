@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Valutazione alunni{% endblock %}</title>
+        {% block stylesheets %}
+         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+               type="text/css" rel="stylesheet" />
+         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" 
+               type="text/css" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <div class="container">
+            {% block flashes %}
+                 {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{type}} alert alert-{{type}}">
+                            <button type="button" class="close" data-dismiss="alert" 
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endblock %}    
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            <script
+                src="//code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+                <script 
+                    src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
+                </script>    
+            <script src="{{ asset('public/js/main.js') }}"></script>    
+        {% endblock %}
+        {% block customJs %}{% endblock %}
+    </body>
+</html>
